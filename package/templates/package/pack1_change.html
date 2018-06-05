@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+
+{% block style %}
+        <style>
+            table {
+                width: 100%;
+            }
+            
+            table tr td {
+                position: relative;
+                border: 1px solid rgba(0,0,0,1);
+                text-align: center;
+                overflow: hidden;
+            }
+            
+            .redText {
+                color: red;
+            }
+            
+            .lineText {
+                color: #aaa;
+                font-size: 0.9em;
+                text-decoration: line-through;
+            }
+            
+            .present {
+                font-weight: bold;
+            }
+            
+            input[type="text"] {
+                border: none;
+                width: 100%;
+                height: 100%;
+                float:left;
+                background-color: #ffffff!important;
+            }
+            
+            .calBox {
+                position: absolute;
+                top: -8px;
+                right: 0;
+                width: 70px;
+                height: 44px;
+            }
+            
+            .calBox>div {
+                border-left: 1px solid #ccc;
+            }
+            
+            .plus {
+                display: inline-block;
+                width: 50%;
+                height: 100%;
+                line-height: 44px;
+                cursor: pointer;
+                font-size: 1.3em;
+                background-color: #d1ecf1;
+            }
+            
+            .minus {
+                display: inline-block;
+                width: 50%;
+                height: 100%;
+                line-height: 44px;
+                cursor: pointer;
+                font-size: 1.5em;
+                background-color: #f8d7da;
+            }
+        </style>
+{% endblock style %}
+
+{% block content %}
+        <div style="width:100%; height: 60px;">
+        </div>
+        <div class="container">
+            <div style="overflow: auto;">
+                <div class="float-right mt-3 mb-3">
+                    <h4><span class="badge badge-secondary">담당자</span><span class="badge">{{ user.username }}</span> </h4>
+                </div>
+            </div>
+            <div class="alert alert-primary">
+                안심 천기저귀 출시 기념 특별 패키지
+            </div>
+            
+            <form class="w-100" action="." method="post">
+                {% csrf_token %}
+                <div style="overflow: auto;" class="mb-3">
+                    <div style="width:120px; text-align: center; float: left;" id="f1">
+                        <div class="alert alert-success mb-0" style="border-radius: 0; height:100%;">
+                            <br />
+                            [1] <br />
+                            초보엄마<br />
+                            패키지<br />
+                            <span class="redText">배송</span><br />
+                            <span class="lineText">183,000</span><br />
+                            128,000원
+                        </div>
+                    </div>
+                    <div style="width: calc(100% - 120px); text-align: center; float: left;" id="f2">
+                        <div class="alert alert-dark mb-0" style="border-radius: 0;">
+                            커버 2장 / 기저귀 10장 / 더블러 2장 / 포밍 세제 1개<br />
+                            <span class="present">[선물]</span> 사각기저귀 5장
+                        </div>
+                    </div>
+                    <div style="width: calc(100% - 120px); text-align: center; float: left;" id="f3">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td rowspan="3" style="width:30px;">커<br />버</td>
+                                    <td></td>
+                                    <td>그레이</td>
+                                    <td>엘로우</td>
+                                    <td>민트</td>
+                                    <td>바이올렛</td>
+                                </tr>
+                                <tr>
+                                    <td style="width:25px;">S</td>
+                                    <td>{{ form.p1 }}<div class="calBox"><div class="plus">+</div><div class="minus">-</div></div></td>
+                                    <td>{{ form.p3 }}<div class="calBox"><div class="plus">+</div><div class="minus">-</div></div></td>
+                                    <td>{{ form.p5 }}<div class="calBox"><div class="plus">+</div><div class="minus">-</div></div></td>
+                                    <td>{{ form.p7 }}<div class="calBox"><div class="plus">+</div><div class="minus">-</div></div></td>
+                                </tr>
+                                <tr>
+                                    <td>M</td>
+                                    <td>{{ form.p2 }}<div class="calBox"><div class="plus">+</div><div class="minus">-</div></div></td>
+                                    <td>{{ form.p4 }}<div class="calBox"><div class="plus">+</div><div class="minus">-</div></div></td>
+                                    <td>{{ form.p6 }}<div class="calBox"><div class="plus">+</div><div class="minus">-</div></div></td>
+                                    <td>{{ form.p8 }}<div class="calBox"><div class="plus">+</div><div class="minus">-</div></div></td>
+                                </tr>
+                                
+                                <tr>
+                                    <td rowspan="2" colspan="2">기<br />저<br />귀</td>
+                                    <td>(S)10장</td>
+                                    <td colspan="3">{{ form.p9 }}<div class="calBox"><div class="plus">+</div><div class="minus">-</div></div></td>
+                                </tr>
+                                <tr>
+                                    <td>(L)10장</td>
+                                    <td colspan="3">{{ form.p10 }}<div class="calBox"><div class="plus">+</div><div class="minus">-</div></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                
+                <div style="overflow: auto;" class="mb-3">
+                    <div style="width:120px; text-align: center; float: left;" id="g1">
+                        <div class="alert alert-success mb-0" style="border-radius: 0; height:100%;">
+                            <br /><br /><br />
+                            [1] <br />
+                            완전<br />
+                            패키지<br />
+                            <span class="redText">배송</span><br />
+                            <span class="lineText">335,000</span><br />
+                            234,000원
+                        </div>
+                    </div>
+                    <div style="width: calc(100% - 120px); text-align: center; float: left;" id="g2">
+                        <div class="alert alert-dark mb-0" style="border-radius: 0;">
+                            커버 3장 / 기저귀 20장 / 더블러 4장 / 포밍 세제 1개<br />
+                            <span class="present">[선물]</span> 사각기저귀 5장 / 바람망사(색상랜덤) 1장 / 세탁망_원형(중) 1개
+                        </div>
+                    </div>
+                    <div style="width: calc(100% - 120px); text-align: center; float: left;" id="g3">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td rowspan="3" style="width:30px;">커<br />버</td>
+                                    <td></td>
+                                    <td>그레이</td>
+                                    <td>엘로우</td>
+                                    <td>민트</td>
+                                    <td>바이올렛</td>
+                                </tr>
+                                <tr>
+                                    <td style="width:25px;">S</td>
+                                    <td>{{ form.p11 }}<div class="calBox"><div class="plus">+</div><div class="minus">-</div></div></td>
+                                    <td>{{ form.p13 }}<div class="calBox"><div class="plus">+</div><div class="minus">-</div></div></td>
+                                    <td>{{ form.p15 }}<div class="calBox"><div class="plus">+</div><div class="minus">-</div></div></td>
+                                    <td>{{ form.p17 }}<div class="calBox"><div class="plus">+</div><div class="minus">-</div></div></td>
+                                </tr>
+                                <tr>
+                                    <td>M</td>
+                                    <td>{{ form.p12 }}<div class="calBox"><div class="plus">+</div><div class="minus">-</div></div></td>
+                                    <td>{{ form.p14 }}<div class="calBox"><div class="plus">+</div><div class="minus">-</div></div></td>
+                                    <td>{{ form.p16 }}<div class="calBox"><div class="plus">+</div><div class="minus">-</div></div></td>
+                                    <td>{{ form.p18 }}<div class="calBox"><div class="plus">+</div><div class="minus">-</div></div></td>
+                                </tr>
+                                
+                                <tr>
+                                    <td rowspan="3" colspan="2">기<br />저<br />귀</td>
+                                    <td style="height:36px;">(S)20장</td>
+                                    <td colspan="3">{{ form.p19 }}<div class="calBox"><div class="plus">+</div><div class="minus">-</div></div></td>
+                                </tr>
+                                <tr>
+                                    <td style="height:36px;">(S)10장+(L)10장</td>
+                                    <td colspan="3">{{ form.p20 }}<div class="calBox"><div class="plus">+</div><div class="minus">-</div></div></td>
+                                </tr>
+                                <tr>
+                                    <td style="height:36px;">(L)20장</td>
+                                    <td colspan="3">{{ form.p21 }}<div class="calBox"><div class="plus">+</div><div class="minus">-</div></div></td>
+                                </tr>
+                                
+                                <tr>
+                                    <td colspan="3" style="height: 36px;">바람망사</td>
+                                    <td colspan="3">{{ form.p22 }}<div class="calBox"><div class="plus">+</div><div class="minus">-</div></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="form-group pt-4 pb-4">
+                    <input type="submit" class="btn btn-primary w-100" value="전송" />
+                </div>
+            </form>
+            
+            
+        </div>
+        
+        <script>
+            $("input[type='text']").attr("class","form-control").prop("readonly",true);
+
+            function ini(){
+                var f2H = $("#f2").outerHeight();
+                var f3H = $("#f3").outerHeight();
+                var g2H = $("#g2").outerHeight();
+                var g3H = $("#g3").outerHeight();
+                
+                $("#f1").height(f2H+f3H+"px");
+                $("#g1").height(g2H+g3H+"px");
+            }
+            
+            ini();
+            
+            $(window).resize(function(){
+                ini(); 
+            });
+            
+            $(".plus").click(function(){
+                var content = $(this).parent(".calBox").siblings("input").val();
+                if(content == ""){
+                    $(this).parent(".calBox").siblings("input").val(1);
+                }else{
+                    $(this).parent(".calBox").siblings("input").val(parseInt(content)+1);
+                }
+            });
+            
+            $(".minus").click(function(){
+                var content = $(this).parent(".calBox").siblings("input").val();
+                if(content == "" || content == "1"){
+                    $(this).parent(".calBox").siblings("input").val("");
+                }else{
+                    $(this).parent(".calBox").siblings("input").val(parseInt(content)-1);
+                }
+            });
+        </script>
+
+{% endblock content %}

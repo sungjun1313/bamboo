@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div style="width:100%; height: 100px;">
+    </div>
+    <div class="container">
+        <div style="overflow: auto;">
+            <div class="float-right mt-3">
+                <h4><span class="badge badge-secondary">담당자</span><span class="badge">{{ user.username }}</span> </h4>
+                <a href="{% url 'logout' %}" class="btn btn-dark w-100">Logout</a>
+                <a href="{% url 'package:customList' user.id %}" class="btn btn-info w-100 mt-2">Admin</a>
+            </div>
+        </div>
+        <form class="pt-5" action="." method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.name.label_tag }}
+                {{ form.name }}
+            </div>
+            <div class="form-group">
+                {{ form.phone.label_tag }}
+                {{ form.phone }}
+            </div>
+            <div class="form-group">
+                {{ form.address.label_tag }}
+                {{ form.address }}
+            </div>
+            <div class="form-group pt-3">
+                <input type="submit" class="btn btn-primary w-100" value="전송" />
+            </div>
+        </form>
+    </div>
+{% endblock content %}

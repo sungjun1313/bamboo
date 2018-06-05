@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h3 class="pt-4 pb-4"><span class="badge badge-secondary">담당자</span><span class="badge">{{ user.username }}</span></h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>고객</th>
+                    <th>주문서1</th>
+                    <th>주문서2</th>
+                    <th>종합</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for custom in object_list %}
+                <tr>
+                    <td><a href="{% url 'package:changeCustom' custom.id %}">{{ custom.name }}</a> </td>
+                    <td>
+                        {% if custom.pack1_set.all|length >= 1 %}
+                            {% for pack1 in custom.pack1_set.all|slice:"1" %}
+                                <a href="{% url 'package:changePack1' pack1.id %}">수정</a>
+                            {% endfor %}
+                        {% else %}
+                            <a href="{% url 'package:adminpack1' custom.id %}">추가</a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if custom.pack2_set.all|length >= 1 %}
+                            {% for pack2 in custom.pack2_set.all|slice:"1" %}
+                            <a href="{% url 'package:changePack2' pack2.id %}">수정</a>
+                            {% endfor %}
+                        {% else %}
+                            <a href="{% url 'package:adminpack2' custom.id %}">추가</a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'package:total' custom.id %}">최종</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="form-group">
+            <a href="{% url 'package:custom' %}" class="btn btn-primary w-100">처음</a>
+        </div>
+    </div>
+{% endblock content %}

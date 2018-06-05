@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div style="width:100%; height: 100px;">
+    </div>
+    <div class="container">
+        <h3>Logged Out</h3>
+        <p class="alert alert-success mt-3">
+            "Thanks for spending your quality time with this web site today."
+            <a href="{% url 'login' %}" class="btn btn-primary ml-3">Log in again</a>
+        </p>
+    </div>
+{% endblock content %}

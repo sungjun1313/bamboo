@@ -1,0 +1,372 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block js %}
+    <script src="{% static 'js/jquery.battatech.excelexport.js' %}"></script>
+{% endblock js %}
+
+{% block style %}
+    <style>
+        .printFrame {
+            width: 90%;
+            min-width: 740px;
+            margin: auto;
+        }
+
+        table {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 1em;
+        }
+
+        table tr td {
+            border: 1px solid black;
+        }
+
+        .classification {
+            color: #155724;
+            background-color: #d4edda;
+        }
+
+        .printBtn {
+            position: fixed;
+            top: 10px;
+            right: 0px;
+            width: 80px;
+            height: 30px;
+            background-color: #cce5ff;
+            color: #004085;
+            font-weight: bold;
+            text-align: center;
+            line-height: 30px;
+            box-shadow: 2px 2px 3px #555555;
+            cursor: pointer;
+        }
+
+        .exelBtn {
+            position: fixed;
+            top: 50px;
+            right: 0px;
+            width: 80px;
+            height: 30px;
+            background-color: #d1ecf1;
+            color: #0c5460;
+            font-weight: bold;
+            text-align: center;
+            line-height: 30px;
+            box-shadow: 2px 2px 3px #555555;
+            cursor: pointer;
+        }
+
+        .exelBtn>a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            color: #0c5460;
+        }
+
+        .adminBtn {
+            position: fixed;
+            top: 90px;
+            right: 0px;
+            width: 80px;
+            height: 30px;
+            background-color: #fff3cd;
+            font-weight: bold;
+            text-align: center;
+            line-height: 30px;
+            box-shadow: 2px 2px 3px #555555;
+            cursor: pointer;
+        }
+
+        .adminBtn>a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            color: #856404;
+        }
+
+        @media print{
+            .printFrame {
+                width: 250mm;
+                min-width: 250mm;
+            }
+
+            .classification {
+                color: #000000;
+            }
+            
+            .noPrint {
+                display: none;
+            }
+
+        }
+    </style>
+{% endblock style %}
+
+{% block content %}
+    <h3 class="pt-5 pb-3 text-center">
+        -주문서-
+    </h3>
+    <div class="printFrame">
+        <table id="tblExport">
+            <tbody>
+                <tr>
+                    <td colspan="6" class="classification">담당자</td>
+                </tr>
+                <tr>
+                    <td colspan="6">{{ user.username }}</td>
+                </tr>
+
+                <tr>
+                    <td colspan="6" class="classification">고객</td>
+                </tr>
+                <tr>
+                    <td style="width:90px;">성명</td>
+                    <td colspan="5">{{ object.name }}</td>
+                </tr>
+                <tr>
+                    <td>번호</td>
+                    <td colspan="5">{{ object.phone|default:"-" }}</td>
+                </tr>
+                <tr>
+                    <td>주소</td>
+                    <td colspan="5">{{ object.address|default:"-" }}</td>
+                </tr>
+                {% for pack1 in object.pack1_set.all|slice:"1" %}
+                    <tr>
+                        <td colspan="6" class="classification">초보엄마 패키지</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3">커버</td>
+                        <td></td>
+                        <td>그레이</td>
+                        <td>옐로우</td>
+                        <td>민트</td>
+                        <td>바이올렛</td>
+                    </tr>
+                    <tr>
+                        <td>S</td>
+                        <td>{{ pack1.p1|default:"-" }}</td>
+                        <td>{{ pack1.p3|default:"-" }}</td>
+                        <td>{{ pack1.p5|default:"-" }}</td>
+                        <td>{{ pack1.p7|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td>M</td>
+                        <td>{{ pack1.p2|default:"-" }}</td>
+                        <td>{{ pack1.p4|default:"-" }}</td>
+                        <td>{{ pack1.p6|default:"-" }}</td>
+                        <td>{{ pack1.p8|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2" colspan="2">기저귀</td>
+                        <td>(S)10장</td>
+                        <td colspan="3">{{ pack1.p9|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td>(L)10장</td>
+                        <td colspan="3">{{ pack1.p10|default:"-" }}</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="6" class="classification">완천 패키지</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3">커버</td>
+                        <td></td>
+                        <td>그레이</td>
+                        <td>옐로우</td>
+                        <td>민트</td>
+                        <td>바이올렛</td>
+                    </tr>
+                    <tr>
+                        <td>S</td>
+                        <td>{{ pack1.p11|default:"-" }}</td>
+                        <td>{{ pack1.p13|default:"-" }}</td>
+                        <td>{{ pack1.p15|default:"-" }}</td>
+                        <td>{{ pack1.p17|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td>M</td>
+                        <td>{{ pack1.p12|default:"-" }}</td>
+                        <td>{{ pack1.p14|default:"-" }}</td>
+                        <td>{{ pack1.p16|default:"-" }}</td>
+                        <td>{{ pack1.p18|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3" colspan="2">기저귀</td>
+                        <td>(S)20장</td>
+                        <td colspan="3">{{ pack1.p19|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td>(S)10장+(L)20장</td>
+                        <td colspan="3">{{ pack1.p20|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td>(L)20장</td>
+                        <td colspan="3">{{ pack1.p21|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">바람망사</td>
+                        <td colspan="3">{{ pack1.p22|default:"-" }}</td>
+                    </tr>
+                {% endfor %}
+                {% for pack2 in object.pack2_set.all|slice:"1" %}
+                    <tr>
+                        <td colspan="6" class="classification">기본제품</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">제품명</td>
+                        <td>NO</td>
+                        <td>옵션</td>
+                        <td>수량</td>
+                        <td>구입금액</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="6">침구</td>
+                        <td rowspan="2">짱구베게</td>
+                        <td>39</td>
+                        <td>핑크</td>
+                        <td>{{ pack2.p23|default:"-" }}</td>
+                        <td>{{ pack2.r23|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td>40</td>
+                        <td>블루</td>
+                        <td>{{ pack2.p24|default:"-" }}</td>
+                        <td>{{ pack2.r24|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td>베게커버</td>
+                        <td>41</td>
+                        <td>그레이</td>
+                        <td>{{ pack2.p25|default:"-" }}</td>
+                        <td>{{ pack2.r25|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3">거즈 블랭킷</td>
+                        <td>42</td>
+                        <td>반짝반짝</td>
+                        <td>{{ pack2.p26|default:"-" }}</td>
+                        <td>{{ pack2.r26|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td>43</td>
+                        <td>동글동글</td>
+                        <td>{{ pack2.p27|default:"-" }}</td>
+                        <td>{{ pack2.r27|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td>44</td>
+                        <td>똑똑</td>
+                        <td>{{ pack2.p28|default:"-" }}</td>
+                        <td>{{ pack2.p28|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="5">신생아 의류 세트</td>
+                        <td colspan="5">세트구성 : 배냇저고리 / 속싸개 / 손싸개 / 턱받이 / 아기모자 [선물] 발싸개</td>
+                    </tr>
+                    <tr>
+                        <td>크림 5종 배송+발싸개</td>
+                        <td>45</td>
+                        <td></td>
+                        <td>{{ pack2.p29|default:"-" }}</td>
+                        <td>{{ pack2.r29|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">단동십훈 5종 배송+발싸개</td>
+                        <td>46</td>
+                        <td>연꽃문</td>
+                        <td>{{ pack2.p30|default:"-" }}</td>
+                        <td>{{ pack2.r30|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td>47</td>
+                        <td>길상문</td>
+                        <td>{{ pack2.p31|default:"-" }}</td>
+                        <td>{{ pack2.r31|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td>솔솔 5종 배송+발싸개</td>
+                        <td>48</td>
+                        <td></td>
+                        <td>{{ pack2.p32|default:"-" }}</td>
+                        <td>{{ pack2.r32|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="4">배냇 저고리</td>
+                        <td>크림 배냇저고리</td>
+                        <td>49</td>
+                        <td></td>
+                        <td>{{ pack2.p33|default:"-" }}</td>
+                        <td>{{ pack2.r33|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">단동십훈 배냇저고리</td>
+                        <td>50</td>
+                        <td>연꽃문</td>
+                        <td>{{ pack2.p34|default:"-" }}</td>
+                        <td>{{ pack2.r34|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td>51</td>
+                        <td>길상문</td>
+                        <td>{{ pack2.p35|default:"-" }}</td>
+                        <td>{{ pack2.r35|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td>솔솔 배냇저고리</td>
+                        <td>52</td>
+                        <td></td>
+                        <td>{{ pack2.p36|default:"-" }}</td>
+                        <td>{{ pack2.r36|default:"-" }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="printBtn noPrint">출력</div>
+        <div class="exelBtn noPrint"><a href="#" download="">엑셀</a></div>
+        <div class="adminBtn noPrint"><a href="{% url 'package:customList' user.id %}">관리자</a></div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $(".printBtn").click(function(){
+                window.print();
+            });
+
+            function itoStr($num)
+            {
+                $num < 10 ? $num = '0'+$num : $num;
+                return $num.toString();
+            } //숫자 형식 지정
+
+            var btn = $('.exelBtn>a');
+            var tbl = 'tblExport';
+
+            btn.on('click', function () {
+                var dt = new Date();
+                var year =  itoStr( dt.getFullYear() );
+                var month = itoStr( dt.getMonth() + 1 );
+                var day =   itoStr( dt.getDate() );
+                var hour =  itoStr( dt.getHours() );
+                var mins =  itoStr( dt.getMinutes() );
+
+                var postfix = year + month + day + "_" + hour + mins;
+                var fileName = "MyTable_"+ postfix + ".xls";
+
+                var uri = $("#"+tbl).excelexportjs({
+                    containerid: tbl
+                    , datatype: 'table'
+                    , returnUri: true
+                }); //엑셀 모듈 사용
+
+                $(this).attr('download', fileName).attr('href', uri).attr('target', '_blank'); //a tag에 엑셀모듈 연결
+                //엑셀로 export후 통합문서로 저장해서 사용, 웹용으로 쓰면 호환 문제 생김.
+            });
+        });
+    </script>
+{% endblock content %}
