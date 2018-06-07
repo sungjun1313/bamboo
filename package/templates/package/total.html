@@ -29,6 +29,16 @@
             background-color: #d4edda;
         }
 
+        .sum {
+            color: #721c24;
+            background-color: #f8d7da;
+        }
+
+        .total {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
         .printBtn {
             position: fixed;
             top: 10px;
@@ -169,6 +179,11 @@
                         <td>(L)10장</td>
                         <td colspan="3">{{ pack1.p10|default:"-" }}</td>
                     </tr>
+                    <tr>
+                        <td colspan="6" class="sum sum1">
+                            {{ pack1.p1|default:0  }}+{{ pack1.p2|default:0  }}+{{ pack1.p3|default:0  }}+{{ pack1.p4|default:0  }}+{{ pack1.p5|default:0  }}+{{ pack1.p6|default:0  }}+{{ pack1.p7|default:0  }}+{{ pack1.p8|default:0  }}+{{ pack1.p9|default:0  }}+{{ pack1.p10|default:0  }}
+                        </td>
+                    </tr>
 
                     <tr>
                         <td colspan="6" class="classification">완천 패키지</td>
@@ -211,6 +226,11 @@
                     <tr>
                         <td colspan="3">바람망사</td>
                         <td colspan="3">{{ pack1.p22|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="6" class="sum sum2">
+                            {{ pack1.p11|default:0 }}+{{ pack1.p12|default:0 }}+{{ pack1.p13|default:0 }}+{{ pack1.p14|default:0 }}+{{ pack1.p15|default:0 }}+{{ pack1.p16|default:0 }}+{{ pack1.p17|default:0 }}+{{ pack1.p18|default:0 }}+{{ pack1.p19|default:0 }}+{{ pack1.p20|default:0 }}+{{ pack1.p21|default:0 }}+{{ pack1.p22|default:0 }}
+                        </td>
                     </tr>
                 {% endfor %}
                 {% for pack2 in object.pack2_set.all|slice:"1" %}
@@ -323,7 +343,15 @@
                         <td>{{ pack2.p36|default:"-" }}</td>
                         <td>{{ pack2.r36|default:"-" }}</td>
                     </tr>
+                    <tr>
+                        <td colspan="6" class="sum sum3">
+                            ({{ pack2.p23|default:0 }}*17000)+({{ pack2.p24|default:0 }}*17000)+({{ pack2.p25|default:0 }}*7000)+({{ pack2.p26|default:0 }}*17000)+({{ pack2.p27|default:0 }}*17000)+({{ pack2.p28|default:0 }}*17000)+({{ pack2.p29|default:0 }}*69000)+({{ pack2.p30|default:0 }}*75000)+({{ pack2.p31|default:0 }}*75000)+({{ pack2.p32|default:0 }}*66000)+({{ pack2.p33|default:0 }}*20000)+({{ pack2.p34|default:0 }}*22000)+({{ pack2.p35|default:0 }}*22000)+({{ pack2.p36|default:0 }}*19000)
+                        </td>
+                    </tr>
                 {% endfor %}
+                <tr>
+                    <td colspan="6" class="total"></td>
+                </tr>
             </tbody>
         </table>
         <div class="printBtn noPrint">출력</div>
@@ -367,6 +395,50 @@
                 $(this).attr('download', fileName).attr('href', uri).attr('target', '_blank'); //a tag에 엑셀모듈 연결
                 //엑셀로 export후 통합문서로 저장해서 사용, 웹용으로 쓰면 호환 문제 생김.
             });
+
+            function numberWithCommas(x) {
+                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+
+            function sum(){
+                var sum1;
+                var sum1Text;
+                var sum2;
+                var sum2Text;
+                var sum3;
+                var sum3Text;
+                var total;
+                var totalText;
+                if($(".sum1").length){
+                    sum1 = eval($(".sum1").text())*128000;
+                    sum1Text = numberWithCommas(sum1);
+                    $(".sum1").text(sum1Text);
+                }else{
+                    sum1 = 0;
+                }
+
+                if($(".sum2").length){
+                    sum2 = eval($(".sum2").text())*234000;
+                    sum2Text = numberWithCommas(sum2);
+                    $(".sum2").text(sum2Text);
+                }else{
+                    sum2 = 0;
+                }
+
+                if($(".sum3").length){
+                    sum3 = eval($(".sum3").text());
+                    sum3Text = numberWithCommas(sum3);
+                    $(".sum3").text(sum3Text);
+                }else{
+                    sum3 = 0;
+                }
+
+                total = sum1+sum2+sum3;
+                totalText = numberWithCommas(total);
+                $(".total").text("총 : "+totalText);
+            }
+
+            sum();
         });
     </script>
 {% endblock content %}
